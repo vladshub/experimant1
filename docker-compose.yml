@@ -1,0 +1,115 @@
+version: '3.6'
+services:
+  kafka:
+    image: landoop/kafka-lenses-dev
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+    ports:
+      - "3030:3030"
+      - "9092:9092"
+      - "2181:2181"
+      - "8081:8081"
+      - "9581:9581"
+      - "9582:9582"
+      - "9584:9584"
+    env_file:
+      - .secrets
+    environment:
+      - ADV_HOST=127.0.0.1
+      - SAMPLEDATA=0
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.0
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:6.3.0
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    links:
+      - elasticsearch
+
+  nginx:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+    - "9999:80"
+    volumes:
+    - ./nginx:/etc/nginx
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+    links:
+      - api
+
+  api:
+    build:
+      context: ./api/src/github.com/keywee/api
+      dockerfile: Dockerfile
+    ports:
+    - "9090:9090"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+    environment:
+      ELASTIC_ADDRESS: http://elasticsearch:9200
+      ELASTIC_INDEX: keywee
+      KAFKA_GROUP_ID: topicextractor
+      KAFKA_TOPIC: keywee
+      KAFKA_ADDRESS: kafka:9092
+    depends_on:
+      - kafka
+      - elasticsearch
+    env_file:
+      - .secrets
+    links:
+      - elasticsearch
+      - kafka
+
+  topicextractor:
+    build:
+      context: ./topicextractor
+      dockerfile: Dockerfile
+    image: topicextractor
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+    env_file:
+      - .secrets
+    environment:
+      ELASTIC_ADDRESS: http://elasticsearch:9200
+      ELASTIC_INDEX: keywee
+      KAFKA_GROUP_ID: topicextractor
+      KAFKA_TOPIC: keywee
+      KAFKA_ADDRESS: kafka:9092
+    depends_on:
+      - kafka
+      - elasticsearch
+    links:
+      - kafka
+      - elasticsearch

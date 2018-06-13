@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package pb;
+
+service API {
+    rpc Add(Item) returns (Status) {}
+    rpc Read(Item) returns (Item) {}
+    rpc Index(Empty) returns (stream Item) {}
+}
+
+message Item {
+    string id = 1;
+    string url = 2;
+    bool estimate_ready = 3;
+    int64 audiance_size = 4;
+    string content = 5;
+    string title = 6;
+    string introduction = 7;
+}
+
+message Status {
+    int64 code = 1;
+    string message = 2;
+}
+
+message Empty {}
