@@ -6,8 +6,7 @@ copy .secrets.example to .secrets and fill it out
 ## Run
 ```
 docker-compose up -d
-sleep 50
-docker-compose up -d
+docker-compose logs -f
 ```
 yes twice it takes kafka a while to be ready (about 50 seconds)
 
