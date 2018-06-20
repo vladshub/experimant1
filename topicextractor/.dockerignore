@@ -2,3 +2,4 @@
 .direnv
 .ipynb_checkpoints
 __pycache__
+.envrc
