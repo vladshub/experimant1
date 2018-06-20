@@ -74,7 +74,7 @@ services:
 
   api:
     build:
-      context: ./api/src/github.com/keywee/api
+      context: ./api
       dockerfile: Dockerfile
     ports:
     - "9090:9090"
