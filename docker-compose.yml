@@ -1,25 +1,32 @@
 version: '3.6'
 services:
-  kafka:
-    image: landoop/kafka-lenses-dev
+  zookeeper:
+    image: wurstmeister/zookeeper
     logging:
       driver: "json-file"
       options:
         max-size: "500k"
         max-file: "50"
     ports:
-      - "3030:3030"
-      - "9092:9092"
       - "2181:2181"
-      - "8081:8081"
-      - "9581:9581"
-      - "9582:9582"
-      - "9584:9584"
-    env_file:
-      - .secrets
+
+  kafka:
+    image: wurstmeister/kafka
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+    ports:
+      - "9092:9092"
     environment:
-      - ADV_HOST=127.0.0.1
-      - SAMPLEDATA=0
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "keywee"
+    links:
+      - zookeeper
+    depends_on:
+      - zookeeper
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.0
@@ -61,6 +68,8 @@ services:
         max-size: "500k"
         max-file: "50"
     links:
+      - api
+    depends_on:
       - api
 
   api:
