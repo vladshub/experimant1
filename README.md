@@ -8,6 +8,6 @@ copy .secrets.example to .secrets and fill it out
 docker-compose up -d
 docker-compose logs -f
 ```
-yes twice it takes kafka a while to be ready (about 50 seconds)
+Sometimes you will see that api and topicextractor had shut down because of missing kafka broker just run `docker-compose up -d` again.
 
 open [http://127.0.0.1:9999](http://127.0.0.1:9999)
