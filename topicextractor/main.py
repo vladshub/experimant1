@@ -110,7 +110,7 @@ def getFBData(item, topics, locations):
 def getTopicsWGeo(content):
     topics = set()
     geo = set()
-    l_parser = spacy.load('en_core_web_sm')
+    l_parser = spacy.load('en')
     parsed_content = l_parser(content)
     ents = list(parsed_content.ents)
     for entity in ents:
@@ -134,18 +134,19 @@ def getContent(item):
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/58: .0.3029.110 Chrome/58.0.3029.110 Safari/537.36'}
     r = requests.get(item.url, headers=user_agent)
     response = HtmlResponse(r.url, body=r.text, encoding='utf-8')
-    content = BeautifulSoup(
-        response.css('.body-content')[0].extract().replace("</p><p>", "</p>&nbsp;<p>").encode("UTF-8"),
-        "lxml").get_text()
-    title = BeautifulSoup(
-        response.xpath("//meta[@property='og:title']/@content").extract()[0].encode("UTF-8"),
-        "lxml").get_text()
-    introduction = BeautifulSoup(
-        response.xpath("//meta[@property='og:description']/@content")[0].extract().encode("UTF-8"),
-        "lxml").get_text()
+
+
+    content = cleanContent(response.css('.body-content,.article-content'))
+    title = cleanContent(response.xpath("//meta[@property='og:title']/@content"))
+    introduction = cleanContent(response.xpath("//meta[@property='og:description']/@content"))
     logger.debug("Got content from url %s", item.url)
     return title + " . " + introduction + " . " + content
 
+def cleanContent(content):
+    if len(content) == 0:
+        return ""
+    return BeautifulSoup(content[0].extract().replace("</p><p>", "</p>&nbsp;<p>").encode("UTF-8"),
+    "lxml").get_text()
 
 def deserializer(serialized):
     assert isinstance(serialized, bytes), 'Expecting a bytes'
