@@ -136,7 +136,7 @@ def getContent(item):
     response = HtmlResponse(r.url, body=r.text, encoding='utf-8')
 
 
-    content = cleanContent(response.css('.body-content,.article-content'))
+    content = cleanContent(response.css('.body-content,.article-content,#articleBody'))
     title = cleanContent(response.xpath("//meta[@property='og:title']/@content"))
     introduction = cleanContent(response.xpath("//meta[@property='og:description']/@content"))
     logger.debug("Got content from url %s", item.url)
