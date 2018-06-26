@@ -25,6 +25,21 @@ export class Item extends jspb.Message {
   getIntroduction(): string;
   setIntroduction(value: string): void;
 
+  clearGeoList(): void;
+  getGeoList(): Array<string>;
+  setGeoList(value: Array<string>): void;
+  addGeo(value: string, index?: number): string;
+
+  clearTopicsList(): void;
+  getTopicsList(): Array<string>;
+  setTopicsList(value: Array<string>): void;
+  addTopics(value: string, index?: number): string;
+
+  clearFacebookIntrestsList(): void;
+  getFacebookIntrestsList(): Array<FacebookIntrest>;
+  setFacebookIntrestsList(value: Array<FacebookIntrest>): void;
+  addFacebookIntrests(value?: FacebookIntrest, index?: number): FacebookIntrest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Item.AsObject;
   static toObject(includeInstance: boolean, msg: Item): Item.AsObject;
@@ -44,6 +59,9 @@ export namespace Item {
     content: string,
     title: string,
     introduction: string,
+    geoList: Array<string>,
+    topicsList: Array<string>,
+    facebookIntrestsList: Array<FacebookIntrest.AsObject>,
   }
 }
 
@@ -84,6 +102,30 @@ export class Empty extends jspb.Message {
 
 export namespace Empty {
   export type AsObject = {
+  }
+}
+
+export class FacebookIntrest extends jspb.Message {
+  getName(): string;
+  setName(value: string): void;
+
+  getId(): string;
+  setId(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): FacebookIntrest.AsObject;
+  static toObject(includeInstance: boolean, msg: FacebookIntrest): FacebookIntrest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: FacebookIntrest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): FacebookIntrest;
+  static deserializeBinaryFromReader(message: FacebookIntrest, reader: jspb.BinaryReader): FacebookIntrest;
+}
+
+export namespace FacebookIntrest {
+  export type AsObject = {
+    name: string,
+    id: string,
   }
 }
 

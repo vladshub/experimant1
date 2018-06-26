@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {Link, Route, Switch} from 'react-router-dom'
-import {Avatar, FontIcon, List, ListItem, Snackbar, Subheader} from 'react-md';
-import ShowSite from "./ShowSite";
+import {ExpansionList, ExpansionPanel} from 'react-md';
 import SitesAPI from "./api";
 
 class ListSites extends Component {
@@ -37,34 +35,26 @@ class ListSites extends Component {
     }
 
     render() {
-        const {toasts, autohide} = this.state;
         return (
-            <List className="md-cell md-cell--12">
-                <Subheader primaryText="Sites List"/>
+            <ExpansionList className='md-cell md-cell--12'>
                 {
                     Object.keys(this.state.sites).map((i) => {
                         let s = this.state.sites[i];
-                        return <ListItem
-                            leftAvatar={<Avatar icon={<FontIcon>folder</FontIcon>}/>}
-                            rightIcon={<FontIcon>info</FontIcon>}
-                            primaryText={s.url}
-                            secondaryText={s.id}
-                            key={s.id}
-                            to={`/sites/${s.id}`}
-                            component={Link}
-                        />
+                        return <ExpansionPanel label={s.url} footer={null}>
+                            <p>Audiance Size: {s.audianceSize}</p>
+                            <p>Estimate Ready: {s.estimateReady}</p>
+                            <p>Topics: {s.topicsList.join(", ")}</p>
+                            <p>Geo: {s.geoList.join(". ")}</p>
+                            <p>Facebook Intrests: <ul>{
+                                s.facebookIntrestsList.map((fi) => {
+                                    return <li>id: {fi.id} Name: {fi.name}</li>
+                                })
+                            }</ul>
+                            </p>
+                        </ExpansionPanel>
                     })
                 }
-                <Switch>
-                    <Route path='/sites/:number' component={ShowSite}/>
-                </Switch>
-                <Snackbar
-                    id="interactive-snackbar"
-                    toasts={toasts}
-                    autohide={autohide}
-                    onDismiss={this.dismissToast}
-                />
-            </List>
+            </ExpansionList>
         );
     }
 }

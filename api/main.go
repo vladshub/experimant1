@@ -25,7 +25,6 @@ import (
 	"google.golang.org/grpc/status"
 	"github.com/Shopify/sarama"
 
-	"reflect"
 	"time"
 	"log"
 	"strconv"
@@ -214,17 +213,30 @@ func (s *api) Read(ctx context.Context, item *pb.Item) (*pb.Item, error) {
 }
 
 func (s *api) Index(_ *pb.Empty, stream pb.API_IndexServer) error {
-	var siteType pb.Item
 	searchResult, err := s.elasticClient().Search().Index(*index).Query(elastic.NewMatchAllQuery()).Do(context.Background())
 	if err != nil {
 		return err
 	}
 	stream.SendHeader(metadata.Pairs("Pre-Response-Metadata", "Is-sent-as-headers-stream"))
-	for _, item := range searchResult.Each(reflect.TypeOf(siteType)) {
-		site := item.(pb.Item)
-		stream.Send(&site)
+	errors := make([]error, 0)
+	if searchResult.TotalHits() > 0 {
+		for _, item := range searchResult.Hits.Hits {
+			siteType := &pb.Item{}
+			data, err := item.Source.MarshalJSON()
+			if err != nil {
+				errors = append(errors, err)
+			}
+			if err = jsonpb.UnmarshalString(string(data), siteType); err != nil {
+				errors = append(errors, err)
+			}
+			stream.Send(siteType)
+		}
 	}
+
 	stream.SetTrailer(metadata.Pairs("Post-Response-Metadata", "Is-sent-as-trailers-stream"))
+	if len(errors) > 0 {
+		return errors[0]
+	}
 	return nil
 }
 

@@ -13,6 +13,7 @@ var goog = jspb;
 var global = Function('return this')();
 
 goog.exportSymbol('proto.pb.Empty', null, global);
+goog.exportSymbol('proto.pb.FacebookIntrest', null, global);
 goog.exportSymbol('proto.pb.Item', null, global);
 goog.exportSymbol('proto.pb.Status', null, global);
 
@@ -27,12 +28,19 @@ goog.exportSymbol('proto.pb.Status', null, global);
  * @constructor
  */
 proto.pb.Item = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.pb.Item.repeatedFields_, null);
 };
 goog.inherits(proto.pb.Item, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   proto.pb.Item.displayName = 'proto.pb.Item';
 }
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.pb.Item.repeatedFields_ = [8,9,10];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -68,7 +76,11 @@ proto.pb.Item.toObject = function(includeInstance, msg) {
     audianceSize: jspb.Message.getFieldWithDefault(msg, 4, 0),
     content: jspb.Message.getFieldWithDefault(msg, 5, ""),
     title: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    introduction: jspb.Message.getFieldWithDefault(msg, 7, "")
+    introduction: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    geoList: jspb.Message.getRepeatedField(msg, 8),
+    topicsList: jspb.Message.getRepeatedField(msg, 9),
+    facebookIntrestsList: jspb.Message.toObjectList(msg.getFacebookIntrestsList(),
+    proto.pb.FacebookIntrest.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -132,6 +144,19 @@ proto.pb.Item.deserializeBinaryFromReader = function(msg, reader) {
     case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setIntroduction(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addGeo(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addTopics(value);
+      break;
+    case 10:
+      var value = new proto.pb.FacebookIntrest;
+      reader.readMessage(value,proto.pb.FacebookIntrest.deserializeBinaryFromReader);
+      msg.addFacebookIntrests(value);
       break;
     default:
       reader.skipField();
@@ -209,6 +234,28 @@ proto.pb.Item.serializeBinaryToWriter = function(message, writer) {
     writer.writeString(
       7,
       f
+    );
+  }
+  f = message.getGeoList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      8,
+      f
+    );
+  }
+  f = message.getTopicsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      9,
+      f
+    );
+  }
+  f = message.getFacebookIntrestsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      10,
+      f,
+      proto.pb.FacebookIntrest.serializeBinaryToWriter
     );
   }
 };
@@ -318,6 +365,95 @@ proto.pb.Item.prototype.getIntroduction = function() {
 /** @param {string} value */
 proto.pb.Item.prototype.setIntroduction = function(value) {
   jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * repeated string geo = 8;
+ * @return {!Array.<string>}
+ */
+proto.pb.Item.prototype.getGeoList = function() {
+  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 8));
+};
+
+
+/** @param {!Array.<string>} value */
+proto.pb.Item.prototype.setGeoList = function(value) {
+  jspb.Message.setField(this, 8, value || []);
+};
+
+
+/**
+ * @param {!string} value
+ * @param {number=} opt_index
+ */
+proto.pb.Item.prototype.addGeo = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 8, value, opt_index);
+};
+
+
+proto.pb.Item.prototype.clearGeoList = function() {
+  this.setGeoList([]);
+};
+
+
+/**
+ * repeated string topics = 9;
+ * @return {!Array.<string>}
+ */
+proto.pb.Item.prototype.getTopicsList = function() {
+  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 9));
+};
+
+
+/** @param {!Array.<string>} value */
+proto.pb.Item.prototype.setTopicsList = function(value) {
+  jspb.Message.setField(this, 9, value || []);
+};
+
+
+/**
+ * @param {!string} value
+ * @param {number=} opt_index
+ */
+proto.pb.Item.prototype.addTopics = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 9, value, opt_index);
+};
+
+
+proto.pb.Item.prototype.clearTopicsList = function() {
+  this.setTopicsList([]);
+};
+
+
+/**
+ * repeated FacebookIntrest facebook_intrests = 10;
+ * @return {!Array.<!proto.pb.FacebookIntrest>}
+ */
+proto.pb.Item.prototype.getFacebookIntrestsList = function() {
+  return /** @type{!Array.<!proto.pb.FacebookIntrest>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.pb.FacebookIntrest, 10));
+};
+
+
+/** @param {!Array.<!proto.pb.FacebookIntrest>} value */
+proto.pb.Item.prototype.setFacebookIntrestsList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 10, value);
+};
+
+
+/**
+ * @param {!proto.pb.FacebookIntrest=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.pb.FacebookIntrest}
+ */
+proto.pb.Item.prototype.addFacebookIntrests = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 10, opt_value, proto.pb.FacebookIntrest, opt_index);
+};
+
+
+proto.pb.Item.prototype.clearFacebookIntrestsList = function() {
+  this.setFacebookIntrestsList([]);
 };
 
 
@@ -603,6 +739,175 @@ proto.pb.Empty.prototype.serializeBinary = function() {
  */
 proto.pb.Empty.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.pb.FacebookIntrest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.pb.FacebookIntrest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.pb.FacebookIntrest.displayName = 'proto.pb.FacebookIntrest';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.pb.FacebookIntrest.prototype.toObject = function(opt_includeInstance) {
+  return proto.pb.FacebookIntrest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.pb.FacebookIntrest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.pb.FacebookIntrest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    id: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.pb.FacebookIntrest}
+ */
+proto.pb.FacebookIntrest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.pb.FacebookIntrest;
+  return proto.pb.FacebookIntrest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.pb.FacebookIntrest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.pb.FacebookIntrest}
+ */
+proto.pb.FacebookIntrest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.pb.FacebookIntrest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.pb.FacebookIntrest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.pb.FacebookIntrest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.pb.FacebookIntrest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getId();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string name = 1;
+ * @return {string}
+ */
+proto.pb.FacebookIntrest.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.pb.FacebookIntrest.prototype.setName = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string id = 2;
+ * @return {string}
+ */
+proto.pb.FacebookIntrest.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.pb.FacebookIntrest.prototype.setId = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

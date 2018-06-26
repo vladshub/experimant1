@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='keywee.proto',
   package='pb',
   syntax='proto3',
-  serialized_pb=_b('\n\x0ckeywee.proto\x12\x02pb\"\x84\x01\n\x04Item\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\x12\x16\n\x0e\x65stimate_ready\x18\x03 \x01(\x08\x12\x15\n\raudiance_size\x18\x04 \x01(\x03\x12\x0f\n\x07\x63ontent\x18\x05 \x01(\t\x12\r\n\x05title\x18\x06 \x01(\t\x12\x14\n\x0cintroduction\x18\x07 \x01(\t\"\'\n\x06Status\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x03\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x07\n\x05\x45mpty2d\n\x03\x41PI\x12\x1d\n\x03\x41\x64\x64\x12\x08.pb.Item\x1a\n.pb.Status\"\x00\x12\x1c\n\x04Read\x12\x08.pb.Item\x1a\x08.pb.Item\"\x00\x12 \n\x05Index\x12\t.pb.Empty\x1a\x08.pb.Item\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x0ckeywee.proto\x12\x02pb\"\xd1\x01\n\x04Item\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\x12\x16\n\x0e\x65stimate_ready\x18\x03 \x01(\x08\x12\x15\n\raudiance_size\x18\x04 \x01(\x03\x12\x0f\n\x07\x63ontent\x18\x05 \x01(\t\x12\r\n\x05title\x18\x06 \x01(\t\x12\x14\n\x0cintroduction\x18\x07 \x01(\t\x12\x0b\n\x03geo\x18\x08 \x03(\t\x12\x0e\n\x06topics\x18\t \x03(\t\x12.\n\x11\x66\x61\x63\x65\x62ook_intrests\x18\n \x03(\x0b\x32\x13.pb.FacebookIntrest\"\'\n\x06Status\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x03\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x07\n\x05\x45mpty\"+\n\x0f\x46\x61\x63\x65\x62ookIntrest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t2d\n\x03\x41PI\x12\x1d\n\x03\x41\x64\x64\x12\x08.pb.Item\x1a\n.pb.Status\"\x00\x12\x1c\n\x04Read\x12\x08.pb.Item\x1a\x08.pb.Item\"\x00\x12 \n\x05Index\x12\t.pb.Empty\x1a\x08.pb.Item\"\x00\x30\x01\x62\x06proto3')
 )
 
 
@@ -81,6 +81,27 @@ _ITEM = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='geo', full_name='pb.Item.geo', index=7,
+      number=8, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='topics', full_name='pb.Item.topics', index=8,
+      number=9, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='facebook_intrests', full_name='pb.Item.facebook_intrests', index=9,
+      number=10, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -94,7 +115,7 @@ _ITEM = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=21,
-  serialized_end=153,
+  serialized_end=230,
 )
 
 
@@ -131,8 +152,8 @@ _STATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=155,
-  serialized_end=194,
+  serialized_start=232,
+  serialized_end=271,
 )
 
 
@@ -155,13 +176,53 @@ _EMPTY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=196,
-  serialized_end=203,
+  serialized_start=273,
+  serialized_end=280,
 )
 
+
+_FACEBOOKINTREST = _descriptor.Descriptor(
+  name='FacebookIntrest',
+  full_name='pb.FacebookIntrest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='pb.FacebookIntrest.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='id', full_name='pb.FacebookIntrest.id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=282,
+  serialized_end=325,
+)
+
+_ITEM.fields_by_name['facebook_intrests'].message_type = _FACEBOOKINTREST
 DESCRIPTOR.message_types_by_name['Item'] = _ITEM
 DESCRIPTOR.message_types_by_name['Status'] = _STATUS
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
+DESCRIPTOR.message_types_by_name['FacebookIntrest'] = _FACEBOOKINTREST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Item = _reflection.GeneratedProtocolMessageType('Item', (_message.Message,), dict(
@@ -185,6 +246,13 @@ Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), d
   ))
 _sym_db.RegisterMessage(Empty)
 
+FacebookIntrest = _reflection.GeneratedProtocolMessageType('FacebookIntrest', (_message.Message,), dict(
+  DESCRIPTOR = _FACEBOOKINTREST,
+  __module__ = 'keywee_pb2'
+  # @@protoc_insertion_point(class_scope:pb.FacebookIntrest)
+  ))
+_sym_db.RegisterMessage(FacebookIntrest)
+
 
 
 _API = _descriptor.ServiceDescriptor(
@@ -193,8 +261,8 @@ _API = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=205,
-  serialized_end=305,
+  serialized_start=327,
+  serialized_end=427,
   methods=[
   _descriptor.MethodDescriptor(
     name='Add',

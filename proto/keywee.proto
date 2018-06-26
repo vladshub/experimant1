@@ -16,6 +16,9 @@ message Item {
     string content = 5;
     string title = 6;
     string introduction = 7;
+    repeated string geo = 8;
+    repeated string topics = 9;
+    repeated FacebookIntrest facebook_intrests = 10;
 }
 
 message Status {
@@ -24,3 +27,8 @@ message Status {
 }
 
 message Empty {}
+
+message FacebookIntrest {
+    string name = 1;
+    string id = 2;
+}

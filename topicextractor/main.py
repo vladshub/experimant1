@@ -7,10 +7,7 @@ import spacy
 from bs4 import BeautifulSoup
 from elasticsearch import Elasticsearch
 from facebook_business import FacebookAdsApi
-# from facebookads.adobjects.adset import AdSet
 from facebook_business.adobjects.adaccount import AdAccount
-# from facebook_business.adobjects.adaccountuser import AdAccountUser
-from facebook_business.adobjects.adset import AdSet
 from facebook_business.adobjects.targetingsearch import TargetingSearch
 from google.protobuf.json_format import Parse, MessageToDict
 from kafka import KafkaConsumer
@@ -46,7 +43,9 @@ def processMessage(item):
     content = getContent(item)
     geo_topics = getTopicsWGeo(content)
     topics = geo_topics['topics']
+    item.topics.extend(topics)
     geo = geo_topics['geo']
+    item.geo.extend(geo)
     if getFBData(item, topics, geo):
         es = Elasticsearch(hosts=elastic_address)
         es.update(index=elastic_index, doc_type='doc', id=item.id, body={'doc': MessageToDict(item)},
@@ -72,6 +71,10 @@ def getFBData(item, topics, locations):
             'id': intrest['id'],
             'name': intrest['name']
         }
+        pb_intrest = keywee_pb2.FacebookIntrest()
+        pb_intrest.name = intrest['name']
+        pb_intrest.id = intrest['id']
+        item.facebook_intrests.extend([pb_intrest])
         logger.debug("Processed [%s] with Facebook TargetingSearch", t)
 
     for t in locations:
