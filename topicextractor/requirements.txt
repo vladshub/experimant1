@@ -20,7 +20,7 @@ idna==2.7
 incremental==17.5.0
 kafka-python==1.4.3
 kq==2.0.0
-lxml==4.2.1
+lxml==4.6.3
 msgpack-numpy==0.4.1
 msgpack-python==0.5.6
 murmurhash==0.28.0
